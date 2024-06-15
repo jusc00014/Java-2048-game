@@ -89,7 +89,7 @@ public class SimpleTests {
 
 	@Test
 	public void testIsSpaceLeft() {
-		if(game.getNumPieces() >= 16) {
+		if(game.getNumPieces() >= (game.getBoardHeight() * game.getBoardWidth())) {
 			assertFalse(game.isSpaceLeft());
 		} else {
 			assertTrue(game.isSpaceLeft());
