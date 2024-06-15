@@ -63,6 +63,15 @@ public class SimpleTests {
 	}
 
 	@Test
+	public void testRightValueInitial() {
+		for(int i = 0; i<4; i++){
+			for (int j = 0; j < 4; j++) {
+				assertTrue(0 == game.getPieceAt(i, j) || 2 == game.getPieceAt(i, j) || 4 == game.getPieceAt(i, j));
+			}
+		}
+	}
+
+	@Test
 	public void testAddPiece() {
 		if (game.isSpaceLeft() == false){
 			assertThrows("There is no space to add piece", IllegalStateException.class, () -> {game.addPiece();});
