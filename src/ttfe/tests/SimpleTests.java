@@ -155,6 +155,8 @@ public class SimpleTests {
 			x = y;
 		}
 		assertFalse(game.getPoints() < k);
+		assertFalse(game.getPoints() < 0);
+		assertFalse(k < 0);
 	}
 
 	@Test
