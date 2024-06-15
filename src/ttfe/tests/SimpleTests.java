@@ -48,7 +48,7 @@ public class SimpleTests {
 	}
 
 	@Test
-	public void testInitialAddPiece() {
+	public void testInitialgetNumMoves() {
 		assertEquals("The initial game did not have zero moves", 0, game.getNumMoves());
 	}
 
@@ -66,6 +66,10 @@ public class SimpleTests {
 	public void testAddPiece() {
 		if (game.isSpaceLeft() == false){
 			assertThrows("There is no space to add piece", IllegalStateException.class, () -> {game.addPiece();});
+		} else {
+			int x = game.getNumPieces();
+			game.addPiece();
+			assertTrue(x == game.getNumPieces());
 		}
 	}
 
@@ -108,6 +112,32 @@ public class SimpleTests {
 	public void testPerformMove() {
 		if(game.getNumPieces() < 16) {
 			assertTrue(game.performMove(MoveDirection.WEST) || game.performMove(MoveDirection.EAST) || game.performMove(MoveDirection.SOUTH) || game.performMove(MoveDirection.NORTH));
+		}
+	}
+
+	@Test
+	public void testIncreaseMoves() {
+		int x = game.getNumMoves();
+		int y;
+		if (game.performMove(MoveDirection.WEST)) {
+			y = game.getNumMoves();
+			assertTrue(x == (y-1));
+			x = y;
+		}
+		if (game.performMove(MoveDirection.EAST)) {
+			y = game.getNumMoves();
+			assertTrue(x == (y-1));
+			x = y;
+		}
+		if (game.performMove(MoveDirection.SOUTH)) {
+			y = game.getNumMoves();
+			assertTrue(x == (y-1));
+			x = y;
+		}
+		if (game.performMove(MoveDirection.NORTH)) {
+			y = game.getNumMoves();
+			assertTrue(x == (y-1));
+			x = y;
 		}
 	}
 
