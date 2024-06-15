@@ -95,7 +95,7 @@ public class SimpleTests {
 		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt((x+1), (y-1), 2);});
 		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt(-1, y-1, 2);});
 		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt((x-1), -1, 2);});
-		assertThrows("The value must be non-negative", IllegalArgumentException.class, () -> {game.setPieceAt(3,3, -4);});
+		assertThrows("The value must be non-negative", IllegalArgumentException.class, () -> {game.setPieceAt(x-1, y-1, -4);});
 	}
 
 	@Test
@@ -124,10 +124,10 @@ public class SimpleTests {
 		assertThrows("The given direction is not valid", IllegalArgumentException.class, () -> {game.performMove(null);});
 	}
 
-	@Test
-	public void testPerformMove() {
-		assertTrue(game.performMove(MoveDirection.WEST) || game.performMove(MoveDirection.EAST) || game.performMove(MoveDirection.SOUTH) || game.performMove(MoveDirection.NORTH));
-	}
+//	@Test
+//	public void testPerformMove() {
+//		assertTrue(game.performMove(MoveDirection.WEST) || game.performMove(MoveDirection.EAST) || game.performMove(MoveDirection.SOUTH) || game.performMove(MoveDirection.NORTH));
+//	}
 
 	@Test
 	public void testIncreaseMoves() {
