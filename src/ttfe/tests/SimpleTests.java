@@ -59,7 +59,12 @@ public class SimpleTests {
 
 	@Test
 	public void testGetPieceAt() {
-		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.getPieceAt(3,5);});
+		int x = game.getBoardHeight();
+		int y = game.getBoardWidth();
+		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.getPieceAt((x-1), (y+1));});
+		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.getPieceAt((x+1), (y-1));});
+		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.getPieceAt(-1, y-1);});
+		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.getPieceAt((x-1), -1);});
 	}
 
 	@Test
@@ -84,10 +89,12 @@ public class SimpleTests {
 
 	@Test
 	public void testSetPieceAt() {
-		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt(3, 5, 2);});
-		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt(5, 3, 2);});
-		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt(-1, 3, 2);});
-		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt(3, -1, 2);});
+		int x = game.getBoardHeight();
+		int y = game.getBoardWidth();
+		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt((x-1), (y+1), 2);});
+		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt((x+1), (y-1), 2);});
+		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt(-1, y-1, 2);});
+		assertThrows("The Coordinates must be within the board dimensions", IllegalArgumentException.class, () -> {game.setPieceAt((x-1), -1, 2);});
 		assertThrows("The value must be non-negative", IllegalArgumentException.class, () -> {game.setPieceAt(3,3, -4);});
 	}
 
@@ -98,10 +105,10 @@ public class SimpleTests {
 
 	@Test
 	public void testIsSpaceLeft() {
-		if(game.getNumPieces() >= (game.getBoardHeight() * game.getBoardWidth())) {
-			assertFalse(game.isSpaceLeft());
-		} else {
+		if(game.getNumPieces() < (game.getBoardHeight() * game.getBoardWidth())) {
 			assertTrue(game.isSpaceLeft());
+		} else {
+			assertFalse(game.isSpaceLeft());
 		}
 	}
 
@@ -119,9 +126,7 @@ public class SimpleTests {
 
 	@Test
 	public void testPerformMove() {
-		if(game.getNumPieces() < 16) {
-			assertTrue(game.performMove(MoveDirection.WEST) || game.performMove(MoveDirection.EAST) || game.performMove(MoveDirection.SOUTH) || game.performMove(MoveDirection.NORTH));
-		}
+		assertTrue(game.performMove(MoveDirection.WEST) || game.performMove(MoveDirection.EAST) || game.performMove(MoveDirection.SOUTH) || game.performMove(MoveDirection.NORTH));
 	}
 
 	@Test
