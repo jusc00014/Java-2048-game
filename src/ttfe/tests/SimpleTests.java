@@ -69,8 +69,8 @@ public class SimpleTests {
 
 	@Test
 	public void testRightValueInitial() {
-		for(int i = 0; i<4; i++){
-			for (int j = 0; j < 4; j++) {
+		for(int i = 0; i < (game.getBoardHeight()); i++){
+			for (int j = 0; j < (game.getBoardWidth()); j++) {
 				assertTrue(0 == game.getPieceAt(i, j) || 2 == game.getPieceAt(i, j) || 4 == game.getPieceAt(i, j));
 			}
 		}
@@ -83,7 +83,7 @@ public class SimpleTests {
 		} else {
 			int x = game.getNumPieces();
 			game.addPiece();
-			assertTrue(x == game.getNumPieces());
+			assertTrue(x + 1 == game.getNumPieces());
 		}
 	}
 
