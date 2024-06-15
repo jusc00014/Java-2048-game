@@ -133,6 +133,7 @@ public class SimpleTests {
 	public void testIncreaseMoves() {
 		int x = game.getNumMoves();
 		int y;
+		int k = game.getPoints();
 		if (game.performMove(MoveDirection.WEST)) {
 			y = game.getNumMoves();
 			assertTrue(x == (y-1));
@@ -153,6 +154,7 @@ public class SimpleTests {
 			assertTrue(x == (y-1));
 			x = y;
 		}
+		assertFalse(game.getPoints() < k);
 	}
 
 	@Test
