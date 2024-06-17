@@ -219,7 +219,7 @@ public class Simulator implements SimulatorInterface {
     void slide(MoveDirection direction) {
         int k;
         switch (direction){
-            case MoveDirection.WEST: {
+            case MoveDirection.NORTH: {
                 for (int i = 0; i < this.h; i++){
                     k = 0;
                     for (int j = 0; j < this.w; j++) {
@@ -234,7 +234,7 @@ public class Simulator implements SimulatorInterface {
                 }
                 break;
             }
-            case MoveDirection.EAST: {
+            case MoveDirection.SOUTH: {
                 for (int i = 0; i < this.h; i++){
                     k = this.w-1;
                     for (int j = (this.w-1); j > -1; j--) {
@@ -249,7 +249,7 @@ public class Simulator implements SimulatorInterface {
                 }
                 break;
             }
-            case MoveDirection.NORTH: {
+            case MoveDirection.WEST: {
                 for (int j = 0; j < this.w; j++){
                     k = 0;
                     for (int i = 0; i < this.h; i++) {
@@ -264,7 +264,7 @@ public class Simulator implements SimulatorInterface {
                 }
                 break;
             }
-            case MoveDirection.SOUTH: {
+            case MoveDirection.EAST: {
                 for (int j = 0; j < this.w; j++){
                     k = this.h-1;
                     for (int i = (this.h-1); i > -1; i--) {
@@ -300,7 +300,7 @@ public class Simulator implements SimulatorInterface {
                 performMove(MoveDirection.NORTH);
             } else if (so) {
                 performMove(MoveDirection.SOUTH);
-            } else if (we) {
+            } else if (we) 
                 performMove(MoveDirection.WEST);
             } else if (ea) {
                 performMove(MoveDirection.EAST);
@@ -308,10 +308,10 @@ public class Simulator implements SimulatorInterface {
                 performMove(null);
             }
             addPiece();
-            //ui.updateScreen(this.Simulator);
+            ui.updateScreen(this);
         }
         System.out.println("Game Over, after " + this.mov + " moves and with " + this.p + " points!");
-        //ui.showGameOverScreen(game);
+        ui.showGameOverScreen(this);
         //throw new UnsupportedOperationException("Unimplemented method 'run'");
     }
 
