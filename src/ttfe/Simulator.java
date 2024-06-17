@@ -300,7 +300,7 @@ public class Simulator implements SimulatorInterface {
                 performMove(MoveDirection.NORTH);
             } else if (so) {
                 performMove(MoveDirection.SOUTH);
-            } else if (we) 
+            } else if (we) {
                 performMove(MoveDirection.WEST);
             } else if (ea) {
                 performMove(MoveDirection.EAST);
@@ -310,7 +310,6 @@ public class Simulator implements SimulatorInterface {
             addPiece();
             ui.updateScreen(this);
         }
-        System.out.println("Game Over, after " + this.mov + " moves and with " + this.p + " points!");
         ui.showGameOverScreen(this);
         //throw new UnsupportedOperationException("Unimplemented method 'run'");
     }
