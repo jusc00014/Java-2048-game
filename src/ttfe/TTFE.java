@@ -129,8 +129,7 @@ public class TTFE {
 		// If requested, the user is asked what player should be used.
 		if (DEBUG_ASK_USER) {
 			String[] PossibleAnswers = { "h", "c" };
-			String Answer = ui.getUserInput(
-					"Use a (h)uman or (c)omputer player?", PossibleAnswers);
+			String Answer = ui.getUserInput("Use a (h)uman or (c)omputer player?", PossibleAnswers);
 			useHuman = Answer.charAt(0) == 'h';
 		}
 

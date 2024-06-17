@@ -16,10 +16,10 @@ public class TTFEFactory {
 	 * 
 	 * @return A 2048 simulator.
 	 */
-	public static SimulatorInterface createSimulator(int width, int height,
-			Random r) {
-		// TODO: Implement me. Return a simulator instance.
-		return null;
+	public static SimulatorInterface createSimulator(int width, int height, Random r) {
+		return new Simulator(width, height, r);
+				// TODO: Implement me. Return a simulator instance.
+		//return null;
 	}
 
 	/**
