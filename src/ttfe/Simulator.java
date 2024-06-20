@@ -445,6 +445,10 @@ public class Simulator implements SimulatorInterface {
         if(player == null || ui == null) {
             throw new IllegalArgumentException("Invalid Player or UserInterface");
         }
+        this.mov = 0;
+        this.p = 0;
+        ui.updateScreen(this);
+        boolean b = false;
         while(isMovePossible()) {
             String PossibleAnswers [] = {"North", "north", "n", "N", "South", "south", "S", "s", "West", "west", "w", "W",  "East", "east", "e", "E",  "NORTH", "SOUTH", "EAST", "WEST"};
             String move = ui.getUserInput("North, South, West or East?", PossibleAnswers);
@@ -453,18 +457,21 @@ public class Simulator implements SimulatorInterface {
             boolean we = (move.charAt(0) == 'w' || move.charAt(0) == 'W');
             boolean ea = (move.charAt(0) == 'e' || move.charAt(0) == 'E');
             if (no) {
-                performMove(MoveDirection.NORTH);
+                b = performMove(MoveDirection.NORTH);
             } else if (so) {
-                performMove(MoveDirection.SOUTH);
+                b = performMove(MoveDirection.SOUTH);
             } else if (we) {
-                performMove(MoveDirection.WEST);
+                b = performMove(MoveDirection.WEST);
             } else if (ea) {
-                performMove(MoveDirection.EAST);
+                b = performMove(MoveDirection.EAST);
             } else {
-                performMove(null);
+                b = performMove(null);
             }
-            addPiece();
-            ui.updateScreen(this);
+            if (b) {
+                this.mov++;
+                addPiece();
+                ui.updateScreen(this);
+            }
         }
         ui.showGameOverScreen(this);
         //throw new UnsupportedOperationException("Unimplemented method 'run'");
