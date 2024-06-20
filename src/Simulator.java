@@ -66,7 +66,7 @@ public class Simulator implements SimulatorInterface {
         int n = 0;
         for (int i = 0; i < this.h; i++) {
             for (int j = 0; j < this.w; j++) {
-                if (!(this.board[j][i] == 0)){
+                if (!(this.board[i][j] == 0)){
                     n++;
                 }
             }
@@ -77,10 +77,10 @@ public class Simulator implements SimulatorInterface {
 
     @Override
     public int getPieceAt(int x, int y) {
-        if (y >= this.h || x >= this.w || x < 0 || y < 0) {
-            //throw new IllegalArgumentException("The coordinates must be inside the field");
+        if (x >= this.h || y >= this.w || x < 0 || y < 0) {
+            throw new IllegalArgumentException("The coordinates must be inside the field");
         }
-        return(this.board[y][x]);
+        return(this.board[x][y]);
         //throw new UnsupportedOperationException("Unimplemented method 'getPieceAt'");
     }
 
@@ -105,7 +105,7 @@ public class Simulator implements SimulatorInterface {
             case MoveDirection.WEST: {
                 for (int i = 0; i < this.h; i++) {
                     for (int j = (this.w-1); j > (0); j--) {
-                        if (this.board[j][i] != 0 && (this.board[i][j-1] == 0 || this.board[j][i] == this.board[i][j-1]))
+                        if (this.board[i][j] != 0 && (this.board[i][j-1] == 0 || this.board[i][j] == this.board[i][j-1]))
                             return(true);
                     }
                 }
@@ -114,7 +114,7 @@ public class Simulator implements SimulatorInterface {
             case MoveDirection.EAST: {
                 for (int i = 0; i < this.h; i++) {
                     for (int j = 0; j < (this.w-1); j++) {
-                        if (this.board[j][i] != 0 && (this.board[i][j+1] == 0 || this.board[j][i] == this.board[i][j+1]))
+                        if (this.board[i][j] != 0 && (this.board[i][j+1] == 0 || this.board[i][j] == this.board[i][j+1]))
                             return(true);
                     }
                 }
@@ -123,7 +123,7 @@ public class Simulator implements SimulatorInterface {
             case MoveDirection.SOUTH: {
                 for (int j = 0; j < (this.w); j++) {
                     for (int i = 0; i < (this.h-1); i++) {
-                        if (this.board[j][i] != 0 && (this.board[i+1][j] == 0 || this.board[j][i] == this.board[i+1][j]))
+                        if (this.board[i][j] != 0 && (this.board[i+1][j] == 0 || this.board[i][j] == this.board[i+1][j]))
                             return(true);
                     }
                 }
@@ -132,7 +132,7 @@ public class Simulator implements SimulatorInterface {
             case MoveDirection.NORTH: {
                 for (int j = 0; j < (this.w); j++) {
                     for (int i = (this.h-1); i > 0; i--) {
-                        if (this.board[j][i] != 0 && (this.board[i-1][j] == 0 || this.board[j][i] == this.board[i-1][j]))
+                        if (this.board[i][j] != 0 && (this.board[i-1][j] == 0 || this.board[i][j] == this.board[i-1][j]))
                             return(true);
                     }
                 }
@@ -158,168 +158,23 @@ public class Simulator implements SimulatorInterface {
         if(!isMovePossible(direction)){
             return(false);
         }
-        boolean b = false;
-        switch (direction) {
-            case MoveDirection.NORTH: {
-                b = northmerge();
-                break;
-            }
-            case MoveDirection.SOUTH: {
-                b = southmerge();
-                break;
-            }
-            case MoveDirection.EAST: {
-                b = eastmerge();
-                break;
-            }
-            case MoveDirection.WEST: {
-                b = westmerge();
-                break;
-            }
-            default: {
-                throw new IllegalArgumentException("The direction is not valid");
-            }
-        }
-        /*
         slide(direction);
         boolean b = merge(direction);
         if (b) {
             slide(direction);
         }
-        */
         return(b);
         //throw new UnsupportedOperationException("Unimplemented method 'performMove'");
     }
 
-    boolean northmerge() {
-        int k = 0;
-        for (int i = 0; i < this.w; i++) {
-            k = 0;
-            int v = 0;
-            for (int j = 0; j < this.h; j++) {
-                if (this.board[i][j] != 0){
-                    if (this.board[i][j] == v){
-                        this.board[i][j] = 0;
-                        this.board[k-1][i] *= 2;
-                        this.p += this.board[k-1][i];
-                        v = 0;
-                    } else {
-                        v  = this.board[i][j];
-                        if (j != k) {
-                            this.board[k][i] = this.board[i][j];
-                            this.board[i][j] = 0;
-                        }
-                        k++;
-                    }
-                }
-                /*
-                if (this.board[i][j] != 0 && this.board[i][j] == v) {
-                    this.board[i][j] = 0;
-                    this.board[k-1][i] *= 2;
-                    this.p += this.board[k-1][i];
-                    v = 0;
-                } else if (this.board[i][j] != 0) {
-                    v = this.board[i][j];
-                    this.board[k][i] = this.board[i][j];
-                    if (j != k) {
-                        this.board[i][j] = 0;
-                    }
-                    k++;
-                }*/
-            }
-        }
-        return(true);
-    }
-
-
-    boolean southmerge() {
-        int k = this.h-1;
-        for (int i = 0; i < this.w; i++) {
-            k = this.h-1;
-            int v = 0;
-            for (int j = this.h-1; j > -1; j++) {
-                if (this.board[i][j] != 0){
-                    if (this.board[i][j] == v){
-                        this.board[i][j] = 0;
-                        this.board[k+1][i] *= 2;
-                        this.p += this.board[k+1][i];
-                        v = 0;
-                    } else {
-                        v  = this.board[i][j];
-                        if (j != k) {
-                            this.board[k][i] = this.board[i][j];
-                            this.board[i][j] = 0;
-                        }
-                        k--;
-                    }
-                }
-
-            }
-        }
-        return(true);
-    }
-
-    boolean westmerge() {
-        int k = 0;
-        for (int i = 0; i < this.h; i++) {
-            k = 0;
-            int v = 0;
-            for (int j = 0; j < this.w; j++) {
-                if (this.board[j][i] != 0){
-                    if (this.board[j][i] == v){
-                        this.board[j][i] = 0;
-                        this.board[i][k-1] *= 2;
-                        this.p += this.board[i][k-1];
-                        v = 0;
-                    } else {
-                        v  = this.board[j][i];
-                        if (j != k) {
-                            this.board[i][k] = this.board[j][i];
-                            this.board[j][i] = 0;
-                        }
-                        k++;
-                    }
-                }
-            }
-        }
-        return(true);
-    }
-
-    boolean eastmerge() {
-        int k = this.w-1;
-        for (int i = 0; i < this.h; i++) {
-            k = this.w-1;
-            int v = 0;
-            for (int j = this.w-1; j > -1; j++) {
-                if (this.board[j][i] != 0){
-                    if (this.board[j][i] == v){
-                        this.board[j][i] = 0;
-                        this.board[i][k+1] *= 2;
-                        this.p += this.board[i][k+1];
-                        v = 0;
-                    } else {
-                        v  = this.board[j][i];
-                        if (j != k) {
-                            this.board[i][k] = this.board[j][i];
-                            this.board[j][i] = 0;
-                        }
-                        k--;
-                    }
-                }
-            }
-        }
-        return(true);
-    }
-
-    
     boolean merge(MoveDirection direction) {
         switch (direction) {
             case MoveDirection.WEST: {
                 for (int i = 0; i < this.h; i++) {
                     for (int j = (this.w-1); j > (0); j--) {
-                        if (this.board[j][i] != 0 && (this.board[j][i] == this.board[i][j-1]))
+                        if (this.board[i][j] != 0 && (this.board[i][j] == this.board[i][j-1]))
                             this.board[i][j-1] *= 2;
-                            this.board[j][i] = 0;
+                            this.board[i][j] = 0;
                             this.p += this.board[i][j-1];
                     }
                 }
@@ -329,9 +184,9 @@ public class Simulator implements SimulatorInterface {
             case MoveDirection.EAST: {
                 for (int i = 0; i < this.h; i++) {
                     for (int j = 0; j < (this.w-1); j++) {
-                        if (this.board[j][i] != 0 && (this.board[j][i] == this.board[i][j+1]))
+                        if (this.board[i][j] != 0 && (this.board[i][j] == this.board[i][j+1]))
                             this.board[i][j+1] *= 2;
-                            this.board[j][i] = 0;
+                            this.board[i][j] = 0;
                     }
                 }
                 return(true);
@@ -339,9 +194,9 @@ public class Simulator implements SimulatorInterface {
             case MoveDirection.SOUTH: {
                 for (int j = 0; j < (this.w); j++) {
                     for (int i = 0; i < (this.h-1); i++) {
-                        if (this.board[j][i] != 0 && (this.board[j][i] == this.board[i+1][j]))
+                        if (this.board[i][j] != 0 && (this.board[i][j] == this.board[i+1][j]))
                             this.board[i+1][j] *= 2;
-                            this.board[j][i] = 0;
+                            this.board[i][j] = 0;
                     }
                 }
                 return(true);
@@ -349,9 +204,9 @@ public class Simulator implements SimulatorInterface {
             case MoveDirection.NORTH: {
                 for (int j = 0; j < (this.w); j++) {
                     for (int i = (this.h-1); i > 0; i--) {
-                        if (this.board[j][i] != 0 && (this.board[i-1][j] == 0 || this.board[j][i] == this.board[i-1][j]))
+                        if (this.board[i][j] != 0 && (this.board[i-1][j] == 0 || this.board[i][j] == this.board[i-1][j]))
                             this.board[i-1][j] *= 2;
-                            this.board[j][i] = 0;
+                            this.board[i][j] = 0;
                     }
                 }
                 return(true);
@@ -368,10 +223,10 @@ public class Simulator implements SimulatorInterface {
                 for (int i = 0; i < this.h; i++){
                     k = 0;
                     for (int j = 0; j < this.w; j++) {
-                        if (this.board[j][i] != 0){
+                        if (this.board[i][j] != 0){
                             if (k != j) {
-                                this.board[i][k] = this.board[j][i];
-                                this.board[j][i] = 0;
+                                this.board[i][k] = this.board[i][j];
+                                this.board[i][j] = 0;
                             }
                             k++;
                         }
@@ -383,10 +238,10 @@ public class Simulator implements SimulatorInterface {
                 for (int i = 0; i < this.h; i++){
                     k = this.w-1;
                     for (int j = (this.w-1); j > -1; j--) {
-                        if (this.board[j][i] != 0){
+                        if (this.board[i][j] != 0){
                             if(k != j) {
-                                this.board[i][k] = this.board[j][i];
-                                this.board[j][i] = 0;
+                                this.board[i][k] = this.board[i][j];
+                                this.board[i][j] = 0;
                             }
                             k--;
                         }
@@ -398,10 +253,10 @@ public class Simulator implements SimulatorInterface {
                 for (int j = 0; j < this.w; j++){
                     k = 0;
                     for (int i = 0; i < this.h; i++) {
-                        if (this.board[j][i] != 0){
+                        if (this.board[i][j] != 0){
                             if(k != i) {
-                                this.board[k][j] = this.board[j][i];
-                                this.board[j][i] = 0;
+                                this.board[k][j] = this.board[i][j];
+                                this.board[i][j] = 0;
                             }
                             k++;
                         }
@@ -413,10 +268,10 @@ public class Simulator implements SimulatorInterface {
                 for (int j = 0; j < this.w; j++){
                     k = this.h-1;
                     for (int i = (this.h-1); i > -1; i--) {
-                        if (this.board[j][i] != 0){
+                        if (this.board[i][j] != 0){
                             if(k != i) {
-                                this.board[k][j] = this.board[j][i];
-                                this.board[j][i] = 0;
+                                this.board[k][j] = this.board[i][j];
+                                this.board[i][j] = 0;
                             }
                             k--;
                         }
