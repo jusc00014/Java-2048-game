@@ -12,6 +12,9 @@ public class Simulator implements SimulatorInterface {
     int[] [] board;
 
     public Simulator(int width, int height, Random r){
+        if (width < 1 || height < 1) {
+            throw new IllegalArgumentException("The dimensions must be positive");
+        }
         this.w = width;
         this.h = height;
         this.r = r;
@@ -479,6 +482,12 @@ public class Simulator implements SimulatorInterface {
 
     @Override
     public void setPieceAt(int x, int y, int piece) {
+        if (x < 0 || y < 0 || x >= this.w || y >= this.h) {
+            throw new IllegalArgumentException("The coordinates must be inside the field");
+        }
+        if (piece < 0) {
+            throw new IllegalArgumentException("The value must not be negative");
+        }
         this.board[x][y] = piece;
         //throw new UnsupportedOperationException("Unimplemented method 'setPieceAt'");
     }
